@@ -137,12 +137,12 @@ except (KeyError, FileNotFoundError):
     logger.debug("There are no ACCESS_TOKEN and REFRESH_TOKEN in Environment Variables")
     access_token = login(username, password)
 
-# Get security incidents for the last 5 minutes. To get events for the minute set "datetime.timedelta(0,60)"
+# Get security incidents for the last 5 minutes. To get events for the last minute set "datetime.timedelta(0,60)"
 # For some reason, time in Portal and retrieved via API differs in 1 hour
 # For example, in Portal event is logged at 09:32:00. The same event has time 08:32:00 via API
 # Because of that I have to subtract 1 hour: (datetime.datetime.now() - datetime.timedelta(0,3600))
 time_until = (datetime.datetime.now() - datetime.timedelta(0,3600)).strftime("%Y-%m-%dT%H:%M:%SZ")
-time_since = (datetime.datetime.now() - datetime.timedelta(0,14400)).strftime("%Y-%m-%dT%H:%M:%SZ")
+time_since = (datetime.datetime.now() - datetime.timedelta(0,3900)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 security_incidents = get_security_incidents(service_instance_id, subscription_id, time_since, time_until, access_token)
 
